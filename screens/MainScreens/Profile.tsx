@@ -8,7 +8,6 @@ import ProfileCard from '../../components/ProfileCard';
 import CardCover from '../../components/CardCover';
 import CardVisible from '../../components/CardVisible';
 import { AntDesign } from '@expo/vector-icons';
-import Pdf from 'react-native-pdf';
 
 type homeScreenProp = StackNavigationProp<RootStackParamList>;
 
@@ -38,15 +37,32 @@ export default function Profile() {
             console.log(e.message)
         }
     }
+    const deleteAccount = async () => {
+        try {
+            await AsyncStorage.removeItem('logindata')
+            await AsyncStorage.removeItem('personData')
+            navigation.replace('Register')
+        } catch (e: any) {
+            console.log(e.message)
+        }
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, alignItems: 'center', backgroundColor: 'white' }}>
-            <Pressable onPress={() => exitProfile()} style={{ gap: 5, flexDirection: 'row', justifyContent: 'flex-end', width: '100%', paddingRight: 20 }}>
-                <Text style={{ fontWeight: 'bold', fontSize: 16 }}>
-                    Çıkış Yap
-                </Text>
-                <AntDesign name="logout" size={24} color="black" />
-            </Pressable>
+            <View style={{ flexDirection: 'row' }}>
+                <Pressable onPress={() => exitProfile()} style={{ gap: 5, flexDirection: 'row', justifyContent: 'flex-end', paddingRight: 20 }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 16 }}>
+                        Çıkış Yap
+                    </Text>
+                    <AntDesign name="logout" size={24} color="black" />
+                </Pressable>
+                <Pressable onPress={() => deleteAccount()} style={{ gap: 5, flexDirection: 'row', justifyContent: 'flex-end', paddingRight: 20 }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 16 }}>
+                        Hesabı Sil
+                    </Text>
+                    <AntDesign name="delete" size={24} color="black" />
+                </Pressable>
+            </View>
             <ScrollView showsVerticalScrollIndicator={false} >
                 <CardCover height={210} customStyle={{ gap: 10 }}>
                     <View style={{ flexDirection: 'row', gap: 15, alignItems: 'center' }}>

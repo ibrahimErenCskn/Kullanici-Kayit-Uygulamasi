@@ -1,4 +1,4 @@
-import { View, Text, Pressable, Dimensions, ScrollView, StyleSheet, TextInput, SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { View, Text, Pressable, Dimensions, StyleSheet, SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import React, { useState } from 'react'
 import * as DocumentPicker from 'expo-document-picker';
 import { FontAwesome6, FontAwesome } from '@expo/vector-icons';
@@ -79,7 +79,7 @@ export default function CvAndProject({ route }: any) {
                     {({ handleSubmit, values, setFieldValue, isValid, dirty }) => (
                         <View style={styles.formikContainer}>
                             <Pressable onPress={() => pickDocument(setFieldValue)}>
-                                <FontAwesome name="file-pdf-o" size={height * 0.3} color="black" />
+                                {values.pdfD ? <Text>Yükleme Tamamlandı</Text> : <FontAwesome name="file-pdf-o" size={height * 0.3} color="black" />}
                                 {
                                     errorType && <Text>{errorType}</Text>
                                 }
