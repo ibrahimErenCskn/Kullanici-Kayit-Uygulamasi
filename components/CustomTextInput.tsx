@@ -1,35 +1,50 @@
-import { StyleSheet, TextInput } from 'react-native'
+import { KeyboardType, StyleSheet, TextInput, View, Dimensions, Text } from 'react-native'
 
-interface TextInputProps {
+type TextInputProps = {
     placeH?: string;
     handleC: any;
-    onB: any;
+    onB?: any;
     val: string;
-    customStyle?: object
+    customStyle?: object;
+    keyboardType?: KeyboardType
+    error?: any
+    touch?: any
+    length?: number;
+    customRight?: object
 }
 
-export default function CustomTextInput({ placeH, handleC, onB, val, customStyle }: TextInputProps) {
+const { width, height } = Dimensions.get('window')
+
+export default function CustomTextInput({ placeH, handleC, onB, val, keyboardType, customStyle, error, length, touch, customRight }: TextInputProps) {
     return (
-        <TextInput
-            style={[styles.textInputS, customStyle]}
-            placeholder={placeH ? placeH : ''}
-            onChangeText={handleC}
-            onBlur={onB}
-            value={val}
-        />
+        <View style={styles.container}>
+            {error && touch ? <View style={[{ position: 'absolute', right: 10, top: height * 0.01 }, customRight]}><Text style={{ fontWeight: 'bold' }}>{error}</Text></View> : null}
+            <TextInput
+                style={[styles.textInputS, customStyle]}
+                placeholder={placeH ? placeH : ''}
+                onChangeText={handleC}
+                onBlur={onB}
+                value={val}
+                keyboardType={keyboardType ? keyboardType : 'default'}
+                maxLength={length ? length : 50}
+            />
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
+    container: {
+        width: width * 0.8,
+        position: 'relative'
+    },
     textInputS: {
-        width: '80%',
-        height: 30,
+        height: height * 0.05,
         borderBottomWidth: 2,
         borderLeftWidth: 2,
         borderBottomColor: 'black',
         borderLeftColor: 'black',
         borderRadius: 15,
         paddingLeft: 8,
-        paddingRight: 12
+        paddingRight: 30
     }
 })
